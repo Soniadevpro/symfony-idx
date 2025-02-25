@@ -53,12 +53,13 @@
       onCreate = {
         # Example: install JS dependencies from NPM
         # npm-install = "npm install";
-        composer-install = "composer install";
+        # composer-install = "composer install"; // removed from onCreate
       };
       # Runs when the workspace is (re)started
       onStart = {
         # Example: start a background task to watch and re-build backend code
         # watch-backend = "npm run watch-backend";
+        composer-install = "composer install";
       };
     };
   };
