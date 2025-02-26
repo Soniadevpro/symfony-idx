@@ -2,50 +2,56 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
+use App\Repository\CategoryRepository;
+use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class DefaultController extends AbstractController
 {
-
-    public function home(): Response
+    public function home(PostRepository $postRepository): Response
     {
-       return $this->render('default/home.html.twig');
-        // return new Response('Hello World');
+        # Récupération de tous les articles
+        $posts = $postRepository->findAll();
+
+        # Affichage de la vue et le passage de la variable posts
+        return $this->render('default/home.html.twig', [
+            'posts' => $posts
+        ]);
     }
 
-    # https://localhost:8000/categorie/politique
-    #[Route('/categorie/{slug}', name: 'default_category', methods: ['GET'])]
-    public function category($slug): Response
+    # http://localhost:8000/category/politique
+    #[Route('/category/{slug}', name: 'default_category', methods: ['GET'])]
+    public function category($slug, CategoryRepository $categoryRepository): Response
     {
-        return new Response('Categorie : '. $slug);
+        # Récupération de la catégorie
+        $category = $categoryRepository->findOneBy(['slug' => $slug]);
+
+        return $this->render('default/category.html.twig', [
+            'category' => $category
+        ]);
     }
 
-    # https://localhost:8000/politique/mon-super-article_42.html
+    # http://localhost:8000/politique/monsuper-article_42.html
     #[Route('/{category}/{slug}_{id}.html', name: 'default_post', methods: ['GET'])]
-    public function post($id, $category, $slug): Response
+    public function post(Post $post): Response
     {
-        return new Response('Post : '. $id . ' - ' . $category . ' - ' . $slug);
+        return $this->render('default/post.html.twig', [
+            'post' => $post
+        ]);
     }
 
+    public function contact(): Response
+    {
+        return $this->render('default/contact.html.twig');
+        #return new Response('Contact me!');
+    }
 
-    #[Route("/connexion", name:"app_connexion")]
-    public function connexion(): Response
+    public function legal(): Response
     {
-       return $this->render('default/connexion.html.twig');
-        
-    }
-    #[Route("/inscription", name:"app_inscription")]
-    public function inscription(): Response
-    {
-       return $this->render('default/inscription.html.twig');
-        
-    }
-    public function article(): Response
-    {
-       return $this->render('default/article.html.twig');
-        
+        return new Response('Mentions Légales!');
     }
 
 }

@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Politique{% endblock %}
-{% block page_title %}Politique{% endblock %}
+{% block title %}{{ category.name }}{% endblock %}
+{% block page_title %}{{ category.name }}{% endblock %}
 
 {% block content %}
     <div class="row">
-        {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
+        {% for post in category.posts %}
+            {% include 'partials/_post.html.twig' %}
+        {% endfor %}
     </div> <!-- /.row -->
 {% endblock %}

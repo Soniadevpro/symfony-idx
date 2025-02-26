@@ -4,15 +4,13 @@
 {% block page_title %}Accueil{% endblock %}
 
 {% block content %}
-
+{# {% dump posts %}
+{{dump(posts)}} #}
     <div class="row">
+     {% for post in posts %}
         {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
-        {% include 'partials/_post.html.twig' %}
+        
+     {% endfor %}
     </div> <!-- /.row -->
 
 {% endblock %}
