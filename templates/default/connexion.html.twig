@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+  <main>
+        <div class="p-5 mx-auto text-center">
+            <h1 class="display-4">Connexion</h1>
+        </div>
+        <div class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-8 mx-auto">
+                        <form id="login" method="POST" action="connexion.php">
+
+                            {# Affichage d'une notification d'erreur #}
+                            {% if errors is defined and errors|length > 0 %}
+                                <div class="alert alert-danger">
+                                    {% for error in errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            
+                            {# Adresse E-mail #}
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Adresse email</label>
+                                <input type="email" class="form-control {% if errors is defined and errors.email is defined %}is-invalid{% endif %}"
+                                       placeholder="Saisissez votre adresse email" value="{{ email|default('') }}"
+                                       id="email" name="email" required>
+                                <div class="invalid-feedback">
+                                    {% if errors is defined and errors.email is defined %}
+                                        {{ errors.email }}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {# Mot de passe #}
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Mot de passe</label>
+                                <input type="password" class="form-control {% if errors is defined and errors.password is defined %}is-invalid{% endif %}"
+                                       placeholder="Saisissez votre mot de passe" value=""
+                                       id="password" name="password" required>
+                                <div class="invalid-feedback">
+                                    {% if errors is defined and errors.password is defined %}
+                                        {{ errors.password }}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-dark">Me connecter</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -3,3 +3,27 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+
+#Page d'accueil
+
+home:
+    path: /
+    controller: App\Controller\DefaultController::home
+
+
+connexion:
+    path: /connexion
+    controller: App\Controller\DefaultController::connexion
+
+
+inscription:
+    path: /inscription
+    controller: App\Controller\DefaultController::inscription
+
+
+article:
+    path: /article
+    controller: App\Controller\DefaultController::article
+
+

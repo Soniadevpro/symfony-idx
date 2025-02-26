@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}TITLE 2{% endblock %}
+
+{% block body %}
+ <main>
+        <div class="container py-5">
+            <!-- En-tête de l'article -->
+            <div class="row mb-4">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4">Les tensions géopolitiques actuelles</h1>
+                    <div class="text-muted mb-4">
+                        <small class="text-muted">Rédigé par <a href="auteur.php?username=jdupont">jdupont</a> - le 17/02/2025 à 11:39</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenu de l'article -->
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <!-- Image principale -->
+                    <img src="https://fakeimg.pl/1200x600/?text=Article" alt="" class="img-fluid mb-4 rounded">
+
+                    <!-- Corps de l'article -->
+                    <div class="article-content">
+                        <p>Une analyse des conflits en cours et de leur impact international...</p>
+                    </div>
+
+                    <!-- Navigation entre articles -->
+                    <div class="d-flex justify-content-between mt-5 pt-3 border-top">
+                        <a href="#" class="btn btn-outline-primary">&larr; Article précédent</a>
+                        <a href="#" class="btn btn-outline-primary">Article suivant &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
