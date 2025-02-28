@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -19,6 +20,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\Blank(message: 'Vous devez saisir votre e-mail.')]
+    #[Assert\Email(message: 'Votre e-mail : "{{ value }}" n\'est pas valide.')]
     private ?string $email = null;
 
     /**
@@ -31,12 +34,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Vous devez saisir un mot de passe.')]
+    #[Assert\NotCompromisedPassword(message: 'Ce mot de passe a déjà été compromis. Veuillez en choisir un autre.')]
+    #[Assert\PasswordStrength(
+        message: 'Votre mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.',
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Vous devez saisir votre prénom.')]
+    #[Assert\Length(max: 255, maxMessage: 'Votre prénom ne peut pas dépasser {{ limit }} caractères.')]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Vous devez saisir votre nom.')]
+    #[Assert\Length(max: 255, maxMessage: 'Votre nom ne peut pas dépasser {{ limit }} caractères.')]
     private ?string $lastname = null;
 
     /**
@@ -45,9 +57,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'user')]
     private Collection $posts;
 
-    public function __construct()
+    public function __construct(string $role = 'ROLE_USER')
     {
         $this->posts = new ArrayCollection();
+        $this->roles[] = $role;
     }
 
     public function getId(): ?int
@@ -140,6 +153,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getLastname(): ?string
     {
         return $this->lastname;
+    }
+
+    public function getFullname(): string
+    {
+        return $this->firstname.' '.$this->lastname;
     }
 
     public function setLastname(string $lastname): static
